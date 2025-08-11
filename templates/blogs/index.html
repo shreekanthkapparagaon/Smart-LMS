@@ -1,0 +1,19 @@
+{% extends '_base.html' %}
+
+{% block title %} Blog | all blogs{% endblock %}
+{% block body %}
+<div class="container mt-5" >
+{% for i in blogs %}
+<div class="card my-5">
+  <div class="card-header">
+    {{i.id}}
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">{{ i.title }}</h5>
+    <p class="card-text">{{ i.slug }}</p>
+    <a href="#" class="btn btn-primary">view Article</a>
+  </div>
+</div>
+{% endfor %}
+</div>
+{% endblock %}
