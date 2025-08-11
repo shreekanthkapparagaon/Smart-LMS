@@ -1,5 +1,5 @@
 /db.sqlite3
 /.venv
 /.idea
-migrations/
 __pycache__/
+*.pyc
