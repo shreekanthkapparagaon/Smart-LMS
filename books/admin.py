@@ -4,6 +4,7 @@ from books.models import Book,bookCategory,issueBook
 @admin.register(Book)
 class bookAdmin(admin.ModelAdmin):
     # list_display = ['id','name','catagory','discription']
+    list_display = ("name","auther", "addr",)
     exclude = ['slug']
 
 admin.site.register(bookCategory)

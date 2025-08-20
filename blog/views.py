@@ -7,6 +7,5 @@ def home(request):
     print(blogs)
     return render(request,'blogs/index.html',{"blogs":blogs})
 def blog(request,id):
-    blog=Article.objects.get(id=id)
-    print(blog)
-    return render(request,'blogs/index.html',{"blogs":blog})
+    blog=Article.objects.filter(pk=id).first()
+    return render(request,'blogs/detail.html',{"blog":blog})

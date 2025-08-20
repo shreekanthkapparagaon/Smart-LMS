@@ -3,17 +3,24 @@
 {% block title %} Blog | all blogs{% endblock %}
 {% block body %}
 <div class="container mt-5" >
-{% for i in blogs %}
-<div class="card my-5">
-  <div class="card-header">
-    {{i.id}}
+  <div class="container mt-5">
+    <h2 class="mb-4 text-center">📰 Latest Articles</h2>
+    <div class="row">
+      {% for i in blogs %}
+      <div class="col-md-12 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">{{ i.title }}</h5>
+                    <p class="card-text">{{ i.discription | safe | truncatewords:10 }}</p>
+                    {% comment %} <p class="text-muted small">Published on{{ i.published_date|date:"M d, Y" }}</p> {% endcomment %}
+                    <p class="text-muted small">Published by {{ i.auther}}</p>
+                    <a href="/blog/{{i.id}}" class="btn btn-primary btn-sm">Read More</a>
+                </div>
+            </div>
+        </div>
+      {% endfor %}
+    </div>
   </div>
-  <div class="card-body">
-    <h5 class="card-title">{{ i.title }}</h5>
-    <p class="card-text">{{ i.slug }}</p>
-    <a href="#" class="btn btn-primary">view Article</a>
-  </div>
-</div>
-{% endfor %}
+
 </div>
 {% endblock %}

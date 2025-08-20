@@ -3,7 +3,7 @@ from .models import Article
 # Register your models here.
 @admin.register(Article)
 class articleAdmin(admin.ModelAdmin):
-    list_display = ('title','slug',)
+    list_display = ('title','auther',)
     fieldsets = (
-        (None, {"fields": ("title", "discription")}),
+        (None, {"fields": ("title", "discription","auther")}),
     )
