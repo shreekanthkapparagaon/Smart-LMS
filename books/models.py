@@ -1,5 +1,5 @@
 import uuid
-from shelf.models import Shelf
+from shelf.models import Shelf,NumOfBooks
 from django.utils.text import slugify
 from django.db import models
 
@@ -36,8 +36,6 @@ class Book(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)
-        # if self.addr.Quantity >= 5:
-        #     raise ValidationError({'value':'there is no space in that shelf'})
         if self.addr.Quantity < 5:
             inst = Shelf.objects.get(Address=self.addr)
             inst.Quantity = self.addr.Quantity + 1
@@ -49,6 +47,41 @@ class Book(models.Model):
 class issueBook(models.Model):
     user = models.ForeignKey(CustomUser,on_delete=models.CASCADE,null=True,blank=True)
     book = models.ForeignKey(Book,on_delete=models.CASCADE)
+    def delete(self, *args, **kwargs):
+        inst = Shelf.objects.get(Address=self.book.addr)
+        inst.Quantity = self.book.addr.Quantity - 1
+        returned_shef = Shelf.objects.filter(Address='On Table').first()
+        if not returned_shef:
+            returned_shef = Shelf(Address='On Table')
+            returned_shef.save()
+        returned_shef.save()
+        bookIst = Book.objects.get(id=self.book.id)
+        returned_shef = Shelf.objects.filter(Address='On Table').first()
+        if not returned_shef:
+            returned_shef = Shelf(Address='On Table')
+            returned_shef.save()
+        bookIst.addr = returned_shef
+        bookIst.save()
+        inst.save()
+        super().delete(*args, **kwargs)
+    def save(self, *args, **kwargs):
+        inst = Shelf.objects.get(Address=self.book.addr)
+        inst.Quantity = self.book.addr.Quantity - 1
+        returned_shef = Shelf.objects.filter(Address='Issued').first()
+        if not returned_shef:
+            returned_shef = Shelf(Address='Issued')
+            returned_shef.save()
+        returned_shef.save()
+        bookIst = Book.objects.get(id=self.book.id)
+        returned_shef = Shelf.objects.filter(Address='Issued').first()
+        if not returned_shef:
+            returned_shef = Shelf(Address='Issued')
+            returned_shef.save()
+        bookIst.addr = returned_shef
+        bookIst.save()
+        inst.save()
 
+
+        super().save(*args, **kwargs)
     def __str__(self):
         return self.book.name + " is issued to " + str(self.user)
