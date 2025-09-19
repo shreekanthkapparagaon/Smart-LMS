@@ -7,6 +7,7 @@
           </title>
     <link href="/static/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
     <link rel="icon" href="{% static 'img/library.ico' %}">
+    {% block styles %}{% endblock styles %}
   </head>
   <body class="bg-gray">
   {% block body %}
@@ -14,7 +15,7 @@
       helllow this base body
   </h1>
   {% endblock %}
-
+      {% block javascript %}{% endblock javascript %}
       <script src="/static/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
   </body>
 </html>

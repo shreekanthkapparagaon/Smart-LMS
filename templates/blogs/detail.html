@@ -1,5 +1,5 @@
 {% extends '_base.html' %}
-
+{% load static %}
 {% block title %} Blog | all blogs{% endblock %}
   <style>
     .pdf-sheet {
@@ -17,19 +17,22 @@
       background-color: #f0f2f5;
     }
   </style>
-
+{% block styles %}
+<link href="{% static 'css/prism.css' %}" rel="stylesheet">
+{% endblock %}
 {% block body %}
 <div class="container my-md-5 py-md-5">
   <div class="pdf-sheet">
     {% if blog %}
         <h1>{{blog.title}}</h1>
         <div class="container">
-            {{blog.discription | safe }}
+            {{ blog.discription|safe }}
         </div>
     {% endif %}
   </div>
 </div>
-
-
-
 {% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js/prism.js' %}"></script>
+{% endblock javascript %}

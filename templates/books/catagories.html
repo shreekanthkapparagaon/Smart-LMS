@@ -1,0 +1,32 @@
+{% extends "_base.html" %}
+{% load static %}
+{% block title %}All Books{% endblock %}
+{% block body %}
+{% include "NAV.html" %}
+
+
+<section class="py-5">
+    <div class="container">
+      <h2 class="text-center mb-4">Browse by Category</h2>
+      <div class="row g-4">
+        
+        {% if books %}
+            {% for book in books %}
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="https://source.unsplash.com/400x300/?fiction,book" class="card-img-top" alt="Fiction">
+                        <div class="card-body">
+                        <h5 class="card-title">{{ book.name }}</h5>
+                        <p class="card-text">{{ book.discription }}</p>
+                        <a href="#" class="btn btn-outline-primary">View Books</a>
+                        <p>{{ book.auther }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+  </section>
+
+{% endblock %}

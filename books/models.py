@@ -15,17 +15,19 @@ def validate_book_addr(value):
     inst = Shelf.objects.get(Address=value)
     if inst.Quantity >=5 :
         raise ValidationError('that shelf was full')
-        
+def validate_catagory(value):
+    if value=="":
+        raise ValidationError("Catagory should not be empty")
 def generate_uuid_hex():
     return uuid.uuid4().hex
 
 class Book(models.Model):
     id = models.CharField(max_length=100,default=generate_uuid_hex,unique=True,primary_key=True)
     name = models.CharField(max_length=255,null=True,blank=True)
-    catagory = models.ForeignKey(bookCategory,on_delete=models.CASCADE,default='null')
+    catagory = models.ForeignKey(bookCategory,on_delete=models.CASCADE,validators=[validate_catagory])
     addr = models.ForeignKey(Shelf,on_delete=models.CASCADE,default='NA',validators=[validate_book_addr])
     slug = models.SlugField(unique=True, blank=True)
-    discription = models.TextField(null=True,blank=True,default="i am a discription")
+    discription = models.TextField(null=True,blank=True,)
     auther = models.CharField(max_length=50,default="Not defined")
     def delete(self, *args, **kwargs):
         if self.addr.Quantity > 0:
@@ -63,6 +65,7 @@ class issueBook(models.Model):
         bookIst.addr = returned_shef
         bookIst.save()
         inst.save()
+        print(self.book.addr)
         super().delete(*args, **kwargs)
     def save(self, *args, **kwargs):
         inst = Shelf.objects.get(Address=self.book.addr)

@@ -38,37 +38,12 @@
     }
   </style>
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-    <div class="container">
-      <a class="navbar-brand" href="#">Vidyārṇava</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <form class="d-flex ms-auto me-3">
-          <input class="form-control me-2" type="search" placeholder="Search books..." aria-label="Search">
-          <button class="btn btn-outline-light" type="submit">Search</button>
-        </form>
-        <ul class="navbar-nav">
-          <li class="nav-item"><a class="nav-link" href="{% url 'admin:index' %}">Admin</a></li>
-          {% if request.user.is_authenticated %}
-          <li class="nav-item">
-            <a class="nav-link" href="/users/logout">Logout</a>
-          </li>
-      {% else %}
-          <li class="nav-item">
-            <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#registerModal">Register</a>
-          </li>
-      {% endif %}
-
-        </ul>
-      </div>
-    </div>
-  </nav>
-
+   {% include "nav.html" %}
+   {% comment %} {% if messages %}
+    {% for message in messages %}
+      {{message}}
+    {% endfor %}
+   {% endif %} {% endcomment %}
   <!-- Hero Section -->
   <section class="hero d-flex align-items-center">
     <div class="container hero-content">
@@ -82,41 +57,26 @@
     <div class="container">
       <h2 class="text-center mb-4">Browse by Category</h2>
       <div class="row g-4">
-        <div class="col-md-4">
-          <div class="card">
-            <img src="https://source.unsplash.com/400x300/?fiction,book" class="card-img-top" alt="Fiction">
-            <div class="card-body">
-              <h5 class="card-title">Fiction</h5>
-              <p class="card-text">Explore novels, short stories, and imaginative literature.</p>
-              <a href="#" class="btn btn-outline-primary">View Books</a>
+        
+        {% if catagories %}
+          {% for i in catagories %}
+            <div class="col-md-4">
+              <div class="card">
+                <img src="https://source.unsplash.com/400x300/?fiction,book" class="card-img-top" alt="Fiction">
+                <div class="card-body">
+                  <h5 class="card-title">{{ i.name }}</h5>
+                  <p class="card-text">Explore novels, short stories, and imaginative literature.</p>
+                  <a href="#" class="btn btn-outline-primary">View Books</a>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card">
-            <img src="https://source.unsplash.com/400x300/?science,books" class="card-img-top" alt="Science">
-            <div class="card-body">
-              <h5 class="card-title">Science</h5>
-              <p class="card-text">Discover books on biology, physics, chemistry, and more.</p>
-              <a href="#" class="btn btn-outline-primary">View Books</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card">
-            <img src="https://source.unsplash.com/400x300/?history,library" class="card-img-top" alt="History">
-            <div class="card-body">
-              <h5 class="card-title">History</h5>
-              <p class="card-text">Dive into world history, biographies, and ancient civilizations.</p>
-              <a href="#" class="btn btn-outline-primary">View Books</a>
-            </div>
-          </div>
-        </div>
+          {% endfor %}
+        {% endif %}
       </div>
     </div>
   </section>
 
-  <!-- Admin Dashboard Preview -->
+  <!-- Admin Dashboard Preview --> 
   <section class="bg-light py-5">
     <div class="container text-center">
       <h2 class="mb-4">Admin Dashboard</h2>
@@ -136,7 +96,7 @@
   <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
-        <form action="/users/login/" method="post"  >
+        <form action='{% url "login_user" %}' method="POST"  >
           {% csrf_token %}
           <div class="modal-header">
             <h5 class="modal-title" id="loginModalLabel">Login</h5>
@@ -165,23 +125,24 @@
   <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
-        <form>
+        <form action='{% url "register_user" %}' method='POST'>
+          {% csrf_token %}
           <div class="modal-header">
             <h5 class="modal-title" id="registerModalLabel">Register</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
           </div>
           <div class="modal-body">
             <div class="mb-3">
-              <label for="registerName" class="form-label">Full Name</label>
-              <input type="text" class="form-control" id="registerName" required>
-            </div>
-            <div class="mb-3">
-              <label for="registerEmail" class="form-label">Email</label>
-              <input type="email" class="form-control" id="registerEmail" required>
+              <label for="registerEmail" class="form-label" placeholder='Email'>Email</label>
+              <input type="email" name='email' class="form-control" id="registerEmail" required>
             </div>
             <div class="mb-3">
               <label for="registerPassword" class="form-label">Password</label>
-              <input type="password" class="form-control" id="registerPassword" required>
+              <input type="password" name='password' class="form-control" id="registerPassword" required>
+            </div>
+            <div class="mb-3">
+              <label for="registerPassword" class="form-label">Conform Password</label>
+              <input type="password" name='password1' class="form-control"  id="registerPassword" required>
             </div>
           </div>
           <div class="modal-footer">
