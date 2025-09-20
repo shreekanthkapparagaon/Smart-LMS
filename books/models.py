@@ -8,7 +8,7 @@ from django.core.exceptions import ValidationError
 
 # Create your models here.
 class bookCategory(models.Model):
-    name = models.CharField(max_length=100,unique=True,default='null',primary_key=True)
+    name = models.CharField(max_length=100,unique=True,default='null',primary_key=True,db_index=True)
     def __str__(self):
         return self.name
 def validate_book_addr(value):
@@ -24,8 +24,8 @@ def generate_uuid_hex():
 class Book(models.Model):
     id = models.CharField(max_length=100,default=generate_uuid_hex,unique=True,primary_key=True)
     name = models.CharField(max_length=255,null=True,blank=True)
-    catagory = models.ForeignKey(bookCategory,on_delete=models.CASCADE,validators=[validate_catagory])
-    addr = models.ForeignKey(Shelf,on_delete=models.CASCADE,default='NA',validators=[validate_book_addr])
+    catagory = models.ForeignKey(bookCategory,on_delete=models.CASCADE,validators=[validate_catagory],db_index=True)
+    addr = models.ForeignKey(Shelf,on_delete=models.CASCADE,default='NA',validators=[validate_book_addr],db_index=True)
     slug = models.SlugField(unique=True, blank=True)
     discription = models.TextField(null=True,blank=True,)
     auther = models.CharField(max_length=50,default="Not defined")

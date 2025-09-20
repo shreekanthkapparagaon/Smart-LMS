@@ -68,3 +68,52 @@ def predict_view(request):
 #     #     except Exception as e:
 #     #         print(e)
 #     return JsonResponse({"error":"eoore"},status=200)
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from .models import Shelf, bookCategory
+
+BRANCH_ROW_MAP = {
+    "CSE": 1,
+    "ME": 2,
+    "ECE": 3,
+    "CE": 4,
+    "EEE": 5
+}
+
+RACK_MATRIX = ['A1', 'A2', 'A3', 'B1', 'B2', 'B3', 'C1', 'C2', 'C3']
+
+@api_view(['POST'])
+def predict_shelf(request):
+    title = request.data.get('title')
+    author = request.data.get('author')
+    branch = request.data.get('branch')
+
+    if not all([title, author, branch]):
+        return Response({"error": "Missing title, author, or branch"}, status=400)
+
+    row = BRANCH_ROW_MAP.get(branch)
+    if not row:
+        return Response({"error": f"Unknown branch '{branch}'"}, status=400)
+
+    for col in range(1, 8):  # C1 to C7
+        for rack in RACK_MATRIX:
+            addr = f"C{col}-R{row}-{rack}"
+            shelf = Shelf.objects.filter(Address=addr, Quantity__lt=5).first()
+            if shelf:
+                return Response({
+                    "predicted_shelf": shelf.Address,
+                    "title": title,
+                    "author": author,
+                    "branch": branch
+                })
+
+    return Response({"error": "No available shelf found for this branch"}, status=404)
+
+
+def books_by_branch(request, branch_code):
+    books = Book.objects.filter(catagory__name=branch_code).select_related('catagory', 'addr')
+    context = {
+        "branch":branch_code,
+        'books': books
+    }
+    return render(request, 'books/branch_books.html', context)

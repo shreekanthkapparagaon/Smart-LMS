@@ -10,7 +10,7 @@ class NumOfBooks(models.IntegerChoices):
     FIFTH = 5, '5'
     # ... other fields
 class Shelf(models.Model):
-    addr = models.CharField(max_length=10,name='Address',primary_key=True)
+    addr = models.CharField(max_length=10,name='Address',primary_key=True,db_index=True)
     qunt = models.IntegerField(choices=NumOfBooks.choices, default=NumOfBooks.ZERO,name='Quantity')
 
     def __str__(self):

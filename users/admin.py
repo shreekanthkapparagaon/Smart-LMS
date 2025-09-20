@@ -27,12 +27,14 @@ class CustomUserAdmin(UserAdmin):
     )
     search_fields = ("email",'id')
     ordering = ("email",)
+    list_per_page = 10
 
 admin.site.register(CustomUser, CustomUserAdmin)
 
 @admin.register(Profile)
 class profileAdmin(admin.ModelAdmin):
     list_display = ('user', 'bio', 'location')
+    list_per_page = 10
 
 # custome site example
 # class MyAdminSite(admin.AdminSite):

@@ -1,5 +1,7 @@
 /db.sqlite3
 /.venv
 /.idea
-__pycache__/
 *.pyc
+/cache/*
+!/cache/.gitkeep
+**/__pycache__/

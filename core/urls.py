@@ -4,6 +4,8 @@ from django.views.generic.base import TemplateView
 from django.conf.urls.static import static
 from django.conf import settings
 from core import views
+from debug_toolbar.toolbar import debug_toolbar_urls
+
 
 urlpatterns = [
     path("", views.home , name="home"),
@@ -16,4 +18,4 @@ urlpatterns = [
     path("blog/", include("blog.urls")),
     path("books/", include("books.urls")),
     path("log-entries/", include("entries.urls")),
-]+ static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]+ static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)+ debug_toolbar_urls()

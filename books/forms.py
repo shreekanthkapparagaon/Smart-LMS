@@ -5,18 +5,6 @@ from django.templatetags.static import static
 
 
 class BookModelForm(forms.ModelForm):
-    check = forms.BooleanField(label=" : ",required=False)
-    catagory_display = forms.CharField(label="Predictided Subjects",required=False,disabled=True)
-    DEPARTMENT_CHOICES = [
-        ('---', '---'),
-        ('ECE', 'ECE'),
-        ('EEE', 'EEE'),
-        ('CSE', 'CSE'),
-        ('ISE', 'ISE'),
-        ('ME', 'ME'),
-        ('CE', 'CE'),
-    ]
-    department = forms.ChoiceField(choices=DEPARTMENT_CHOICES, label="Department")
     class Meta:
         model = Book
         fields = '__all__'
