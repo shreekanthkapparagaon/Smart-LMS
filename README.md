@@ -7,6 +7,18 @@
 > open terminal in the project directory 
 
 >follow the commands
+> ```command
+>  add the following to the core/.env file 
+> ```
+> * ```env 
+>   SECRET_KEY=your secreate key
+>   DEBUG=True
+>   DATABASE_NAME=database_name
+>   DATABASE_USER=database_user
+>   DATABASE_PASSWORD=database_password
+>   DATABASE_HOST=database_host
+>   DATABASE_PORT=database_port // normally 5432
+> ```
 > 
 > * `python -m venv env`
 > 
