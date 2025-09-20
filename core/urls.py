@@ -1,16 +1,14 @@
 from django.contrib import admin
 from django.urls import path,include
-from django.views.generic.base import TemplateView
 from django.conf.urls.static import static
 from django.conf import settings
 from core import views
-from debug_toolbar.toolbar import debug_toolbar_urls
+from django.conf import settings
 
 
 urlpatterns = [
     path("", views.home , name="home"),
     path('schema-viewer/', include('schema_viewer.urls')),
-    # path('ckeditor/', include('ckeditor_uploader.urls')),
     path('admin/doc/', include('django.contrib.admindocs.urls')),
     path('admin/', admin.site.urls),
     path("users/", include("users.urls")),
@@ -18,4 +16,4 @@ urlpatterns = [
     path("blog/", include("blog.urls")),
     path("books/", include("books.urls")),
     path("log-entries/", include("entries.urls")),
-]+ static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)+ debug_toolbar_urls()
+]+ static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

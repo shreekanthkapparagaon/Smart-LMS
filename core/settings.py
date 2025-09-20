@@ -38,10 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admindocs',
-    'django_extensions',
-    "debug_toolbar",
+    # 'django_extensions',
     'rest_framework',
-    "schema_viewer",
+    'schema_viewer',
     'import_export',
     'tinymce',
     'users',
@@ -59,8 +58,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.contrib.admindocs.middleware.XViewMiddleware',
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
+    'django.contrib.admindocs.middleware.XViewMiddleware'
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -290,9 +288,6 @@ TINYMCE_DEFAULT_CONFIG = {
 USE_TZ = True
 TIME_ZONE = 'UTC'
 
-INTERNAL_IPS = [
-    "127.0.0.1",
-]
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',

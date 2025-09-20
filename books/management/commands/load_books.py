@@ -32,9 +32,13 @@ class Command(BaseCommand):
                 failed += 1
                 continue
 
-            category = bookCategory.objects.filter(name=cat_name).first()
-            shelf = Shelf.objects.filter(Address=shelf_addr).first()
+            category,BookCreated = bookCategory.objects.get_or_create(name=cat_name)
+            shelf,ShelfCreated = Shelf.objects.get_or_create(Address=shelf_addr)
 
+            if BookCreated:
+                self.stderr.write(self.style.SUCCESS(f"Book category created with {category}.."))
+            if ShelfCreated:
+                self.stderr.write(self.style.SUCCESS(f"Book category created with {shelf}.."))
             if not category or not shelf:
                 self.stderr.write(self.style.WARNING(f"Invalid category or shelf for: {name}"))
                 failed += 1
