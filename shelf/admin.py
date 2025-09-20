@@ -6,3 +6,4 @@ class shelfAdmin(admin.ModelAdmin):
     list_display = ("Address", "Quantity",)
     actions = None
     list_filter = ["Quantity"]
+    search_fields = ['Address']

@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (selectField) {
         selectField.addEventListener('change', function (event) {
-            console.log("chicked")
             if (selectField.checked){
                 title = document.getElementById('id_name').value
                 auther = document.getElementById('id_auther').value

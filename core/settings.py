@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.admindocs',
     'django_extensions',
+    'rest_framework',
     "schema_viewer",
     'tinymce',
     'users',
@@ -267,3 +268,5 @@ TINYMCE_DEFAULT_CONFIG = {
     "custom_undo_redo_levels": 10,
     "language": "en_EN",  # To force a specific language instead of the Django current language.
 }
+USE_TZ = True
+TIME_ZONE = 'UTC'

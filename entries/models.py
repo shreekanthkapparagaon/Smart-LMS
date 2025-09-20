@@ -1,11 +1,11 @@
 from django.db import models
 from users.models import CustomUser
-import datetime
+from datetime import datetime
 
 # Create your models here.
 class LogEntries(models.Model):
-    user = models.ForeignKey(CustomUser,on_delete=models.CASCADE)
-    entered_at = models.DateTimeField(default=lambda:datetime.datetime.now())
+    user = models.ForeignKey(CustomUser,on_delete=models.CASCADE,to_field='id')
+    entered_at = models.DateTimeField(default=lambda:datetime.now())
     exited_at = models.DateTimeField(null=True, blank=True)
 
     def duration(self):
