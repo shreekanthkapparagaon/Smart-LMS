@@ -1,6 +1,5 @@
 from django.shortcuts import render,redirect
 from users.models import CustomUser
-from django.contrib import messages
 
 from django.contrib.auth import authenticate, login,logout
 # Create your views here.
@@ -15,7 +14,6 @@ def loginUser(request):
         else:
             print('error')
             # Handle invalid credentials
-            pass
     return redirect('home')
 
 def logoutUser(request):

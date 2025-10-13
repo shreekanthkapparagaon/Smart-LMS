@@ -15,6 +15,8 @@ class articleAdmin(admin.ModelAdmin):
         return qs.filter(auther=request.user)
 
     def has_change_permission(self, request, obj=None):
+        if obj:
+            obj.auther = request.user
         if obj is None or request.user.is_superuser:
             return True
         return obj.auther == request.user

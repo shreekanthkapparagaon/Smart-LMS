@@ -1,0 +1,104 @@
+{% extends "admin/change_form.html" %}
+{% block extrahead %}
+
+
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; }
+    input, button { padding: 10px; font-size: 16px; margin: 5px 0; }
+    #log { border: 1px solid #ccc; padding: 10px; height: 200px; overflow-y: auto; white-space: pre-wrap; }
+    .success { color: green; }
+    .error { color: red; }
+  </style>
+
+
+<h1>ESP8266 RFID Writer</h1>
+
+<button id="connectBtn">Connect to ESP8266</button><br>
+<input type="text" id="rfidData" placeholder="Enter text (max 32 chars)" maxlength="32">
+<button id="sendBtn">Send WRITE Command</button>
+
+<h3>Status / Logs:</h3>
+<div id="log">Logs will appear here...</div>
+
+<script>
+let port;
+let writer;
+let reader;
+const log = document.getElementById('log');
+
+function appendLog(message, type="") {
+  const span = document.createElement('span');
+  span.textContent = message + "\n";
+  if (type === "success") span.classList.add("success");
+  if (type === "error") span.classList.add("error");
+  log.appendChild(span);
+  log.scrollTop = log.scrollHeight;
+}
+
+// ---------------- Connect to ESP8266 ----------------
+async function connectSerial() {
+  try {
+    port = await navigator.serial.requestPort();
+    await port.open({ baudRate: 9600 });
+    appendLog("✅ Connected to ESP8266 port", "success");
+
+    // Setup writer
+    const textEncoder = new TextEncoderStream();
+    writer = textEncoder.writable.getWriter();
+    textEncoder.readable.pipeTo(new WritableStream({ write(chunk) {} }));
+
+    // Setup reader to show ESP8266 responses
+    const textDecoder = new TextDecoderStream();
+    port.readable.pipeTo(textDecoder.writable);
+    reader = textDecoder.readable.getReader();
+
+    readLoop();
+
+  } catch (err) {
+    appendLog(`❌ Connection failed: ${err}`, "error");
+  }
+}
+
+// ---------------- Read ESP8266 responses ----------------
+async function readLoop() {
+  try {
+    while (true) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      if (value) appendLog(value.trim());
+    }
+  } catch (err) {
+    appendLog(`❌ Read error: ${err}`, "error");
+  }
+}
+
+// ---------------- Send WRITE command ----------------
+async function sendWriteCommand() {
+  if (!port || !writer) {
+    appendLog("❌ Please connect to ESP8266 first!", "error");
+    return;
+  }
+
+  const data = document.getElementById("rfidData").value.trim();
+  if (!data) {
+    appendLog("❌ Enter some text to write!", "error");
+    return;
+  }
+
+  const command = `WRITE ${data}\n`;
+  try {
+    await writer.write(command);
+    appendLog(`✉️ Sent command: ${command.trim()}`, "success");
+  } catch (err) {
+    appendLog(`❌ Failed to send command: ${err}`, "error");
+  }
+}
+
+// ---------------- Event Listeners ----------------
+document.getElementById("connectBtn").addEventListener("click", connectSerial);
+document.getElementById("sendBtn").addEventListener("click", sendWriteCommand);
+
+</script>
+
+
+{% endblock %}

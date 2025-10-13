@@ -4,8 +4,18 @@ from django.contrib.auth.admin import UserAdmin
 from .forms import CustomUserCreationForm, CustomUserChangeForm
 from .models import CustomUser,Profile
 
+from import_export.admin import ExportMixin
+from import_export import resources
 
-class CustomUserAdmin(UserAdmin):
+class UserResource(resources.ModelResource):
+    class Meta:
+        model = CustomUser
+        fields = ('id', 'email', 'is_staff', 'is_active', 'date_joined')
+        export_order = ('id', 'email', 'is_staff', 'is_active', 'date_joined')
+
+
+class CustomUserAdmin(ExportMixin,UserAdmin):
+    resource_class = UserResource
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
     model = CustomUser
