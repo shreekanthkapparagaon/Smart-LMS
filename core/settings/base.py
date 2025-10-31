@@ -131,7 +131,7 @@ JAZZMIN_SETTINGS ={
     # "site_logo": "books/img/logo.png",
 
     # Logo to use for your site, must be present in static files, used for login form logo (defaults to site_logo)
-    "login_logo": None,
+    "login_logo": "img/library.ico",
 
     # Logo to use for login form in dark themes (defaults to login_logo)
     "login_logo_dark": None,
@@ -140,7 +140,7 @@ JAZZMIN_SETTINGS ={
     "site_logo_classes": "img-circle",
 
     # Relative path to a favicon for your site, will default to site_logo if absent (ideally 32x32 px)
-    "site_icon": None,
+    "site_icon": "img/library.ico",
 
     # Welcome text on the login screen
     "welcome_sign": "Welcome to the library",
@@ -150,39 +150,11 @@ JAZZMIN_SETTINGS ={
 
     # List of model admins to search from the search bar, search bar omitted if excluded
     # If you want to use a single search field you dont need to use a list, you can use a simple string
-    "search_model": ["users.CustomUser", "auth.Group"],
+    "search_model": ["users.CustomUser","books.Book","blog.Article"],
 
-    # Field name on user model that contains avatar ImageField/URLField/Charfield or a callable that receives the user
     "user_avatar": None,
 
-    ############
-    # Top Menu #
-    ############
-
-
-    # Links to put along the top menu
-    # "topmenu_links": [
-    #
-    #     # Url that gets reversed (Permissions can be added)
-    #     {"name": "Home", "url": "admin:index", "permissions": ["auth.view_user"]},
-    #
-    #     # external url that opens in a new window (Permissions can be added)
-    #     # {"name": "Support", "url": "https://github.com/farridav/django-jazzmin/issues", "new_window": True},
-    #
-    #     # model admin to link to (Permissions checked against model)
-    #     {"model": "users.CustomUser"},
-    #
-    #     # App with dropdown menu to all its models pages (Permissions checked against models)
-    #     {"app": "books"},
-    # ],
-
-    #############
-    # User Menu #
-    #############
-
-    # Additional links to include in the user menu on the top right ("app" url type is not allowed)
     "usermenu_links": [
-        # {"name": "Support", "url": "https://github.com/farridav/django-jazzmin/issues", "new_window": True},
         {"model": "auth.user"}
     ],
 
@@ -206,20 +178,19 @@ JAZZMIN_SETTINGS ={
     "order_with_respect_to": ["auth", "books", "books.author", "books.book"],
 
     "custom_links": {
-    "customuser": [{
-        # Any Name you like
-        "name": "Make Messages",
+        "books": [
+            {
+                "name": "Dashboard",
+                "url": "admin:dashboard",  # Django URL name
+                "icon": "fas fa-chart-bar",
+                "permissions": ["books.view_issuebook"],
+            },
+        ],
 
-        # url name e.g `admin:index`, relative urls e.g `/admin/index` or absolute urls e.g `https://domain.com/admin/index`
-        "url": "home",
-
-        # any font-awesome icon, see list here https://fontawesome.com/icons?d=gallery&m=free&v=5.0.0,5.0.1,5.0.10,5.0.11,5.0.12,5.0.13,5.0.2,5.0.3,5.0.4,5.0.5,5.0.6,5.0.7,5.0.8,5.0.9,5.1.0,5.1.1,5.2.0,5.3.0,5.3.1,5.4.0,5.4.1,5.4.2,5.13.0,5.12.0,5.11.2,5.11.1,5.10.0,5.9.0,5.8.2,5.8.1,5.7.2,5.7.1,5.7.0,5.6.3,5.5.0,5.4.2 (optional)
-        "icon": "fas fa-comments",
-
-        # a list of permissions the user must have to see this link (optional)
-        "permissions": ["customuser.view_customuser"]
-    }]
-},
+    },
+    "topmenu_links": [
+            {"name": "Statestics", "url": "admin:dashboard", "permissions": []},
+        ],
 }
 
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
@@ -254,3 +225,4 @@ CACHES = {
         }
     }
 }
+LOGIN_URL = '/users/login'

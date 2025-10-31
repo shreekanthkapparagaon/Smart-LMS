@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import Article
-# Register your models here.
-@admin.register(Article)
+from core.admin import custom_admin_site
+
 class articleAdmin(admin.ModelAdmin):
     list_display = ('title','auther',)
     fieldsets = (
@@ -30,3 +30,5 @@ class articleAdmin(admin.ModelAdmin):
         if not change or not obj.auther:
             obj.auther = request.user
         super().save_model(request, obj, form, change)
+
+custom_admin_site.register(Article,articleAdmin)

@@ -1,0 +1,15 @@
+{% extends "admin/change_form.html" %}
+{% load static %}
+
+{% block submit_buttons_bottom %}
+  {{ block.super }}
+  {% if original and original.pk %}
+    {% if not original.is_returned %}
+      <a class="btn btn-outline-danger w-100 m-auto p-auto mt-md-3 mt-sm-2" href="{% url 'admin:issuebook-return' original.pk %}">
+        Return Book
+      </a>
+    {% else %}
+      <span class="btn btn-outline-info w-100 m-auto p-auto mt-md-3 mt-sm-2" style="margin-left:10px; color: green;">✅ Already Returned</span>
+    {% endif %}
+  {% endif %}
+{% endblock %}

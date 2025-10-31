@@ -1,3 +1,4 @@
+from core.admin import custom_admin_site
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
@@ -39,16 +40,12 @@ class CustomUserAdmin(ExportMixin,UserAdmin):
     ordering = ("email",)
     list_per_page = 10
 
-admin.site.register(CustomUser, CustomUserAdmin)
 
-@admin.register(Profile)
+
 class profileAdmin(admin.ModelAdmin):
     list_display = ('user', 'bio', 'location')
     list_per_page = 10
 
-# custome site example
-# class MyAdminSite(admin.AdminSite):
-#     site_header = "Monty Python administration"
-#
-# admin_site = MyAdminSite(name="myadmin")
-# # admin_site.register()
+
+custom_admin_site.register(CustomUser, CustomUserAdmin)
+custom_admin_site.register(Profile, profileAdmin)

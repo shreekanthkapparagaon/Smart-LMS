@@ -1,156 +1,267 @@
-{% extends "_base.html" %}
-{% load static %}
-{% block title %}Home{% endblock %}
-  {% block body %}
-  <style>
-    .hero {
-      background: url('{% static 'img/bg.jpg' %}') no-repeat center center/cover;
-      height: 100vh;
-      position: relative;
-      color: white;
-    }
+{% extends "_base.html" %} {% load static %} {% block title %}Home{% endblock %}
+{% block body %}
+<style>
+  .hero {
+    background: url('{% static 'img/bg.jpg' %}') no-repeat center center/cover;
+    height: 100vh;
+    position: relative;
+    color: white;
+  }
 
-    .hero::after {
-      content: "";
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background-color: rgba(0, 0, 0, 0.6);
-    }
+  .hero::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+  }
 
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      text-align: center;
-      {% comment %} top: 30%; {% endcomment %}
-      transform: translateY(-50%);
-    }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    {% comment %} top: 30%; {% endcomment %}
+    transform: translateY(-50%);
+  }
 
-    .card img {
-      height: 180px;
-      object-fit: cover;
-    }
+  .card img {
+    height: 180px;
+    object-fit: cover;
+  }
 
-    footer {
-      background-color: #343a40;
-      color: white;
-      padding: 15px 0;
-    }
-  </style>
-  <!-- Navbar -->
-   {% include "nav.html" %}
-   {% comment %} {% if messages %}
-    {% for message in messages %}
-      {{message}}
-    {% endfor %}
-   {% endif %} {% endcomment %}
-  <!-- Hero Section -->
-  <section class="hero d-flex align-items-center">
-    <div class="container hero-content">
-      <h1>Welcome to Vidyārṇava</h1>
-      <p>Effortlessly manage books, users, and records in one place.</p>
-      <a href="/blog/" class="btn btn-outline-secondary text-white btn-lg">Explore Catalog </a>
+  footer {
+    background-color: #343a40;
+    color: white;
+    padding: 15px 0;
+  }
+</style>
+<!-- Navbar -->
+{% include "nav.html" %} {% comment %} {% if messages %} {% for message in
+messages %} {{message}} {% endfor %} {% endif %} {% endcomment %}
+<!-- Hero Section -->
+<section class="hero d-flex align-items-center">
+  <div class="container hero-content">
+    <h1>Welcome to Vidyārṇava</h1>
+    <p>Effortlessly manage books, users, and records in one place.</p>
+    <a href="/blog/" class="btn btn-outline-secondary text-white btn-lg"
+      >Explore Catalog
+    </a>
+  </div>
+</section>
+
+<section class="py-5">
+  <div class="container">
+    {% if catagories %}
+    <h2 class="text-center mb-4">Most readed books</h2>
+    <div class="row g-4">
+      {% for book in catagories %}
+      <div class="col-md-4">
+        <div class="card">
+          <img
+            src="https://source.unsplash.com/400x300/?fiction,book"
+            class="card-img-top"
+            alt="Fiction"
+          />
+          <div class="card-body">
+            <h5 class="card-title">{{ book.name }}</h5>
+            <p class="card-text">
+              {{book.discription}}
+            </p>
+            <a href="/books/{{i.id}}" class="btn btn-outline-primary"
+              >View Books</a
+            >
+          </div>
+        </div>
+      </div>
+      {% endfor %}
     </div>
-  </section>
+    {% endif %}
+  </div>
+</section>
 
-  <section class="py-5">
-    <div class="container">
-      <h2 class="text-center mb-4">Browse by Category</h2>
-      <div class="row g-4">
-        
-        {% if catagories %}
-          {% for i in catagories %}
-            <div class="col-md-4">
-              <div class="card">
-                <img src="https://source.unsplash.com/400x300/?fiction,book" class="card-img-top" alt="Fiction">
-                <div class="card-body">
-                  <h5 class="card-title">{{ i.name }}</h5>
-                  <p class="card-text">Explore novels, short stories, and imaginative literature.</p>
-                  <a href="/books/{{i.name}}" class="btn btn-outline-primary">View Books</a>
+
+<section class="py-5">
+  <div class="container">
+  {% if request.user.is_authenticated %}
+    {% if recomended_books %}
+
+            {% if catagories %}
+              <h2 class="text-center mb-4">Recomended For You</h2>
+              <div class="row g-4">
+              {% for book in recomended_books %}
+                <div class="col-md-4">
+                  <div class="card">
+                    <img
+                      src="https://source.unsplash.com/400x300/?fiction,book"
+                      class="card-img-top"
+                      alt="Fiction"
+                    />
+                    <div class="card-body">
+                      <h5 class="card-title">{{ book.title }}</h5>
+                      <p class="card-text">
+                        connect you - {{book.score}}
+                      </p>
+                      <a href="/books/{{i.id}}" class="btn btn-outline-primary"
+                        >View Books</a
+                      >
+                    </div>
+                  </div>
                 </div>
+                {% endfor %}
               </div>
-            </div>
-          {% endfor %}
-        {% endif %}
-      </div>
-    </div>
-  </section>
+            {% endif %}
 
-  <!-- Admin Dashboard Preview --> 
-  <section class="bg-light py-5">
-    <div class="container text-center">
-      <h2 class="mb-4">Admin Dashboard</h2>
-      <p class="mb-4">Track issued books, manage users, and generate reports all in one place.</p>
-      <a href="{% url 'admin:index' %}" class="btn btn-secondary">Go to Admin Panel</a>
-    </div>
-  </section>
+    {% endif %}
+  {% else %}
+  user is not authenticated
+  {% endif %}
+  </div>
+</section>
+<!-- Admin Dashboard Preview -->
+<section class="bg-light py-5">
+  <div class="container text-center">
+    <h2 class="mb-4">Admin Dashboard</h2>
+    <p class="mb-4">
+      Track issued books, manage users, and generate reports all in one place.
+    </p>
+    <a href="{% url 'admin:index' %}" class="btn btn-secondary"
+      >Go to Admin Panel</a
+    >
+  </div>
+</section>
 
-  <!-- Footer -->
-  <footer class="text-center">
-    <div class="container">
-      <p class="mb-0">&copy; 2025 LibrarySys. All rights reserved.</p>
-    </div>
-  </footer>
+<!-- Footer -->
+<footer class="text-center">
+  <div class="container">
+    <p class="mb-0">&copy; 2025 LibrarySys. All rights reserved.</p>
+  </div>
+</footer>
 
-  <!-- Login Modal -->
-  <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <form action='{% url "login_user" %}' method="POST"  >
-          {% csrf_token %}
-          <div class="modal-header">
-            <h5 class="modal-title" id="loginModalLabel">Login</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+<!-- Login Modal -->
+<div
+  class="modal fade"
+  id="loginModal"
+  tabindex="-1"
+  aria-labelledby="loginModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form action='{% url "login_user" %}' method="POST">
+        {% csrf_token %}
+        <div class="modal-header">
+          <h5 class="modal-title" id="loginModalLabel">Login</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="loginEmail" class="form-label">Email</label>
+            <input
+              type="email"
+              name="email"
+              class="form-control"
+              id="loginEmail"
+              required
+            />
           </div>
-          <div class="modal-body">
-            <div class="mb-3">
-              <label for="loginEmail" class="form-label">Email</label>
-              <input type="email" name="email" class="form-control" id="loginEmail" required>
-            </div>
-            <div class="mb-3">
-              <label for="loginPassword" class="form-label">Password</label>
-              <input type="password" name="password" class="form-control" id="loginPassword" required>
-            </div>
+          <div class="mb-3">
+            <label for="loginPassword" class="form-label">Password</label>
+            <input
+              type="password"
+              name="password"
+              class="form-control"
+              id="loginPassword"
+              required
+            />
           </div>
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-primary">Login</button>
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          </div>
-        </form>
-      </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Login</button>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+        </div>
+      </form>
     </div>
   </div>
+</div>
 
-  <!-- Register Modal -->
-  <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <form action='{% url "register_user" %}' method='POST'>
-          {% csrf_token %}
-          <div class="modal-header">
-            <h5 class="modal-title" id="registerModalLabel">Register</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+<!-- Register Modal -->
+<div
+  class="modal fade"
+  id="registerModal"
+  tabindex="-1"
+  aria-labelledby="registerModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form action='{% url "register_user" %}' method="POST">
+        {% csrf_token %}
+        <div class="modal-header">
+          <h5 class="modal-title" id="registerModalLabel">Register</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="registerEmail" class="form-label" placeholder="Email"
+              >Email</label
+            >
+            <input
+              type="email"
+              name="email"
+              class="form-control"
+              id="registerEmail"
+              required
+            />
           </div>
-          <div class="modal-body">
-            <div class="mb-3">
-              <label for="registerEmail" class="form-label" placeholder='Email'>Email</label>
-              <input type="email" name='email' class="form-control" id="registerEmail" required>
-            </div>
-            <div class="mb-3">
-              <label for="registerPassword" class="form-label">Password</label>
-              <input type="password" name='password' class="form-control" id="registerPassword" required>
-            </div>
-            <div class="mb-3">
-              <label for="registerPassword" class="form-label">Conform Password</label>
-              <input type="password" name='password1' class="form-control"  id="registerPassword" required>
-            </div>
+          <div class="mb-3">
+            <label for="registerPassword" class="form-label">Password</label>
+            <input
+              type="password"
+              name="password"
+              class="form-control"
+              id="registerPassword"
+              required
+            />
           </div>
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-success">Register</button>
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <div class="mb-3">
+            <label for="registerPassword" class="form-label"
+              >Conform Password</label
+            >
+            <input
+              type="password"
+              name="password1"
+              class="form-control"
+              id="registerPassword"
+              required
+            />
           </div>
-        </form>
-      </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Register</button>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+        </div>
+      </form>
     </div>
   </div>
-  {% endblock %}
+</div>
+{% endblock %}

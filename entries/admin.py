@@ -1,9 +1,10 @@
 from django.contrib import admin
+from core.admin import custom_admin_site
 import datetime
 # Register your models here.
 from entries.models import LogEntries
 
-@admin.register(LogEntries)
+
 class LogEntriesAdmin(admin.ModelAdmin):
     list_display = ('user', 'formatted_entered', 'formatted_exited','visit_duration')
 
@@ -25,3 +26,4 @@ class LogEntriesAdmin(admin.ModelAdmin):
             return f"{hours}h {minutes}m"
         return "Still inside"
     visit_duration.short_description = 'Duration'
+custom_admin_site.register(LogEntries,LogEntriesAdmin)

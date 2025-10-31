@@ -1,0 +1,57 @@
+{
+  "tags": [
+    "Programming", "Python", "Java", "C", "C++", "C#", "JavaScript", "TypeScript", "Go", "Rust",
+    "PHP", "Swift", "Kotlin", "Ruby", "Perl", "Scala", "R", "Dart", "MATLAB", "Shell Scripting",
+    "Assembly Language", "Fortran", "COBOL",
+
+    "HTML", "CSS", "SASS", "Bootstrap", "Tailwind CSS", "jQuery", "React", "Vue.js", "Angular", "Next.js",
+    "Node.js", "Express.js", "Nuxt.js", "Web Development", "Frontend", "Backend", "Full Stack Development",
+    "Web Design", "UI/UX", "Accessibility", "Responsive Design",
+
+    "Data Science", "Machine Learning", "Deep Learning", "Artificial Intelligence", "Neural Networks",
+    "Computer Vision", "Natural Language Processing", "Data Analytics", "Big Data", "Data Mining",
+    "Feature Engineering", "Model Deployment", "Data Visualization", "Pandas", "NumPy", "Matplotlib",
+    "Seaborn", "TensorFlow", "PyTorch", "Scikit-learn", "Keras", "Hugging Face", "OpenCV",
+    "Statistics", "Probability", "Mathematics for ML", "AI Ethics", "MLOps", "Data Engineering",
+    "Predictive Analytics", "Time Series", "Reinforcement Learning", "AutoML", "Data Governance",
+
+    "Database", "SQL", "NoSQL", "PostgreSQL", "MySQL", "SQLite", "MongoDB", "Redis", "Cassandra",
+    "Elasticsearch", "Firebase", "Neo4j", "Database Optimization", "Stored Procedures", "Data Warehousing",
+    "ETL", "OLAP", "Graph Databases",
+
+    "Software Engineering", "Agile", "Scrum", "DevOps", "CI/CD", "Microservices", "System Design",
+    "Software Architecture", "Design Patterns", "Version Control", "Git", "Testing", "Unit Testing",
+    "Integration Testing", "Automation Testing", "TDD", "BDD", "SDLC", "Code Optimization", "Refactoring",
+    "API Development", "REST", "GraphQL", "API Security", "Documentation", "Technical Writing",
+
+    "Operating Systems", "Linux", "Unix", "Windows", "macOS", "Computer Networks", "Networking",
+    "Routing", "Switching", "Network Security", "Network Administration", "Wireless Networks",
+    "Cloud Networking", "Software Defined Networking", "TCP/IP", "DNS", "HTTP/HTTPS", "Load Balancing",
+    "VPN", "Firewalls", "Network Troubleshooting", "5G", "Edge Computing",
+
+    "Cybersecurity", "Ethical Hacking", "Penetration Testing", "Vulnerability Assessment", "SOC",
+    "Incident Response", "Digital Forensics", "Malware Analysis", "Reverse Engineering", "Threat Intelligence",
+    "Security Operations", "Network Defense", "Zero Trust", "Cryptography", "Web Application Security",
+    "Cloud Security", "Information Security", "Risk Management", "Governance & Compliance",
+    "Blockchain Security", "IoT Security", "Phishing Defense", "Social Engineering Prevention",
+
+    "Cloud Computing", "AWS", "Azure", "Google Cloud", "Docker", "Kubernetes", "Terraform",
+    "Ansible", "Jenkins", "Prometheus", "Grafana", "Helm", "Serverless", "Virtualization",
+    "Infrastructure as Code", "Containerization", "Monitoring", "Scaling", "Load Testing",
+    "Automation", "Performance Engineering", "Disaster Recovery",
+
+    "Electronics", "Digital Electronics", "Analog Electronics", "Microprocessors", "Microcontrollers",
+    "Embedded Systems", "IoT", "Robotics", "Automation Systems", "Sensors", "VLSI Design",
+    "FPGA", "PCB Design", "Arduino", "Raspberry Pi", "ARM Architecture", "Wireless Communication",
+    "Control Systems", "Signal Processing", "Power Electronics", "Mechatronics", "Autonomous Systems",
+
+    "Blockchain", "Web3", "Smart Contracts", "Decentralized Applications", "FinTech", "Quantum Computing",
+    "AR/VR", "Metaverse", "3D Printing", "Digital Twins", "Edge AI", "Green Computing",
+    "Sustainable Engineering", "Industry 4.0", "Bioinformatics", "HealthTech", "SpaceTech",
+
+    "Project Management", "Entrepreneurship", "Innovation", "Research Methodology", "Ethics in Technology",
+    "Cloud Architecture", "IT Infrastructure", "Digital Marketing", "SEO", "Content Management",
+    "E-Learning Systems", "Education Technology", "Technical Communication", "Career Development",
+    "Soft Skills", "Leadership", "Mentorship"
+  ]
+}

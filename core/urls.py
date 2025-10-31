@@ -1,4 +1,5 @@
 from django.contrib import admin
+from .admin import custom_admin_site
 from django.urls import path,include
 from django.conf.urls.static import static
 from django.conf import settings
@@ -9,7 +10,8 @@ urlpatterns = [
     path("", views.home , name="home"),
     path('schema-viewer/', include('schema_viewer.urls')),
     path('admin/doc/', include('django.contrib.admindocs.urls')),
-    path('admin/', admin.site.urls),
+    # path('admin/', admin.site.urls),
+    path('admin/', custom_admin_site.urls),
     path("users/", include("users.urls")),
     path("users/", include("django.contrib.auth.urls")),
     path("blog/", include("blog.urls")),

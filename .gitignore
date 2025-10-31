@@ -6,3 +6,4 @@
 !/cache/.gitkeep
 **/__pycache__/
 core/.env
+/data/
