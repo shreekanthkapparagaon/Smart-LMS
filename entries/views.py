@@ -30,7 +30,7 @@ def log_visit(request):
                 active_log.exited_at = datetime.now()
                 active_log.save()
                 return Response({
-                    'message': 'Exit time recorded',
+                    'message': f'Exit time recorded for {userInst.email}',
                     'log_id': active_log.id,
                     'entered_at': active_log.entered_at,
                     'exited_at': active_log.exited_at
@@ -42,7 +42,7 @@ def log_visit(request):
                     entered_at=datetime.now()
                 )
                 return Response({
-                    'message': 'Visit started',
+                    'message': f'Visit started for {userInst.email}',
                     'log_id': new_log.id,
                     'entered_at': new_log.entered_at
                 },status=status.HTTP_201_CREATED)

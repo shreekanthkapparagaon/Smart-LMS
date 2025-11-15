@@ -1,13 +1,13 @@
 {% extends "admin/change_form.html" %}
 {% load i18n admin_urls %}
-<script>
-    function showAlert() {
+{% comment %} <script>
+    function copyText() {
         alert("The button was clicked!");
     }
 </script>
 {% block submit_buttons_bottom %}
     {{ block.super }}
     <div class="submit-row m-auto p-auto">
-        <input type="Button" onclick="showAlert()" value="{% translate 'Your Custom Button' %}" class="btn btn-outline-success btn-lg">
+        <input type="Button" onclick="copyText()" value="{% translate 'Your Custom Button' %}" class="btn btn-outline-success btn-lg">
     </div>
-{% endblock %}
+{% endblock %} {% endcomment %}

@@ -40,3 +40,4 @@ def registerUser(request):
         # messages.success('user register successfully....!')
         return redirect('home')
     return redirect('home')
+

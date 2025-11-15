@@ -9,6 +9,7 @@ from django.urls import path
 from django.shortcuts import redirect, get_object_or_404
 from shelf.models import Shelf
 from core.admin import custom_admin_site
+from import_export.admin import ImportExportModelAdmin
 
 def mark_as_returned(modeladmin, request, queryset):
     updated = queryset.update(is_returned=True)
@@ -23,11 +24,9 @@ def mark_as_returned(modeladmin, request, queryset):
 class BookResource(resources.ModelResource):
     class Meta:
         model = Book
-        fields = ('name', 'auther', 'slug', 'catagory', 'addr__addr')
-        export_order = ('name', 'auther', 'catagory', 'addr__addr', 'slug')
 
 
-class bookAdmin(ExportMixin, admin.ModelAdmin):
+class bookAdmin(ImportExportModelAdmin):
     resource_class = BookResource
     form = BookAdminForm
 
@@ -54,17 +53,46 @@ class bookAdmin(ExportMixin, admin.ModelAdmin):
         )
     }),
     ("Uploader", {
-        "fields": ("id", "send_to_device_button",)
+        "fields": (("id", "send_to_device_button",),)
     }),
     )
 
     # Custom button to send book ID
     def send_to_device_button(self, obj):
         return format_html(
-            '<button type="button" class="btn btn-success send-book-id mt-2 mb-2" data-book-id="{}">📡 Send to ESP8266</button>',
+             '''
+                <button type="button" onclick="copyText(this)" 
+                        class="btn btn-primary btn-sm rounded-pill px-3 shadow-sm"  
+                        data-book-id="{}">
+                    📋 Copy ID
+                </button>
+                <script>
+                    function copyText(button) {{
+                        const bookId = button.getAttribute("data-book-id");
+                        navigator.clipboard.writeText(bookId).then(() => {{
+                            // Show a subtle toast instead of alert
+                            const toast = document.createElement("div");
+                            toast.innerText = "Copied: " + bookId;
+                            toast.style.position = "fixed";
+                            toast.style.bottom = "20px";
+                            toast.style.right = "20px";
+                            toast.style.background = "#28a745";
+                            toast.style.color = "white";
+                            toast.style.padding = "8px 12px";
+                            toast.style.borderRadius = "6px";
+                            toast.style.boxShadow = "0 2px 6px rgba(0,0,0,0.2)";
+                            document.body.appendChild(toast);
+                            setTimeout(() => toast.remove(), 2000);
+                        }}).catch(err => {{
+                            console.error("Failed to copy ID: ", err);
+                        }});
+                    }}
+                </script>
+            ''',
             obj.id
         )
-    send_to_device_button.short_description = "Write"
+
+    send_to_device_button.short_description = " : "
 
 
     # Export hook
@@ -84,6 +112,7 @@ class issueBookAdmin(admin.ModelAdmin):
     list_display = ('book', 'user', 'issued_on', 'is_returned')
     exclude=("is_returned",)
     actions=[mark_as_returned]
+    autocomplete_fields = ['user','book']
     def get_urls(self):
         urls = super().get_urls()
         custom_urls = [

@@ -76,3 +76,4 @@ def recommend_shelf_api(request):
     tags = bookTag.objects.filter(name__in=tag_names)
     shelf = recommend_shelf_for_book(name, tags, author)
     return JsonResponse({"recommended_addr": shelf.addr if shelf else None})
+

@@ -185,6 +185,12 @@ JAZZMIN_SETTINGS ={
                 "icon": "fas fa-chart-bar",
                 "permissions": ["books.view_issuebook"],
             },
+            {
+                "name": "Uploader",
+                "url": "admin:uploader",
+                "icon": "fas fa-crown",
+                "permissions": ["auth.view_user"],
+            },
         ],
 
     },
