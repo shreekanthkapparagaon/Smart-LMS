@@ -41,7 +41,7 @@ let port, reader, writer;
 async function connectSerial() {
     try {
     port = await navigator.serial.requestPort();
-    await port.open({ baudRate: 115200 });
+    await port.open({ baudRate: 9600 });
     writer = port.writable.getWriter();
     reader = port.readable.getReader();
     readLoop();
@@ -78,7 +78,7 @@ async function readLoop() {
 async function writeCommand() {
     const cmd = document.getElementById("command").value + "\n";
     if (writer) {
-    await writer.write(new TextEncoder().encode("WRITE "+cmd));
+    await writer.write(new TextEncoder().encode(cmd));
     log("➡️ Sent: " + cmd.trim());
     } else {
     log("⚠️ Not connected.");
@@ -95,7 +95,7 @@ function clearOutput() {
 
 function log(msg) {
     const output = document.getElementById("output");
-    output.value += msg + "\n";
+    output.value += msg + " ";
     output.scrollTop = output.scrollHeight;
 }
 </script>
